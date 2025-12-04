@@ -1,0 +1,70 @@
+/* Modern Table Component */
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.modern-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.table-header {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+}
+
+.table-header .table-row {
+  border-bottom: 2px solid rgba(102, 126, 234, 0.2);
+}
+
+.table-cell {
+  padding: 18px 20px;
+  text-align: left;
+  font-size: 14px;
+}
+
+.table-header .table-cell {
+  font-weight: 700;
+  color: #2c3e50;
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+}
+
+.table-body .table-cell {
+  color: #5a6c7d;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.table-body .table-row:last-child .table-cell {
+  border-bottom: none;
+}
+
+/* Striped */
+.table-striped .table-body .table-row:nth-child(even) {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+/* Hover */
+.table-hover .table-body .table-row {
+  transition: all 0.3s ease;
+}
+
+.table-hover .table-body .table-row:hover {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+  transform: scale(1.01);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .table-cell {
+    padding: 12px 15px;
+    font-size: 13px;
+  }
+}

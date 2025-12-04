@@ -1,0 +1,152 @@
+/* Modern Button Component */
+.modern-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 28px;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.modern-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateX(-100%);
+  transition: transform 0.5s ease;
+}
+
+.modern-btn:hover::before {
+  transform: translateX(0);
+}
+
+.modern-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.modern-btn:active {
+  transform: translateY(0);
+}
+
+.modern-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Variants */
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.btn-primary:hover {
+  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
+}
+
+.btn-success {
+  background: linear-gradient(135deg, #2ed573 0%, #1abc9c 100%);
+  color: white;
+}
+
+.btn-success:hover {
+  box-shadow: 0 8px 24px rgba(46, 213, 115, 0.4);
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, #ff4757 0%, #ff6348 100%);
+  color: white;
+}
+
+.btn-danger:hover {
+  box-shadow: 0 8px 24px rgba(255, 71, 87, 0.4);
+}
+
+.btn-warning {
+  background: linear-gradient(135deg, #ffa502 0%, #ff7f50 100%);
+  color: white;
+}
+
+.btn-warning:hover {
+  box-shadow: 0 8px 24px rgba(255, 165, 2, 0.4);
+}
+
+.btn-info {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  color: white;
+}
+
+.btn-info:hover {
+  box-shadow: 0 8px 24px rgba(79, 172, 254, 0.4);
+}
+
+.btn-outline {
+  background: transparent;
+  border: 2px solid #667eea;
+  color: #667eea;
+  box-shadow: none;
+}
+
+.btn-outline:hover {
+  background: #667eea;
+  color: white;
+}
+
+.btn-ghost {
+  background: rgba(0, 0, 0, 0.05);
+  color: #2c3e50;
+  box-shadow: none;
+}
+
+.btn-ghost:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+/* Sizes */
+.btn-small {
+  padding: 10px 20px;
+  font-size: 13px;
+  border-radius: 10px;
+}
+
+.btn-medium {
+  padding: 14px 28px;
+  font-size: 15px;
+}
+
+.btn-large {
+  padding: 18px 36px;
+  font-size: 17px;
+  border-radius: 14px;
+}
+
+/* Full Width */
+.btn-fullwidth {
+  width: 100%;
+}
+
+/* Icon */
+.btn-icon {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+}
+
+.btn-text {
+  position: relative;
+  z-index: 1;
+}

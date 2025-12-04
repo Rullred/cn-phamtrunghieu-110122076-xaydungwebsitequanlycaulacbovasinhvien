@@ -1,0 +1,62 @@
+services:
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    container_name: ql_clb_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: ql_clb_sv
+      MYSQL_USER: qlclb_user
+      MYSQL_PASSWORD: qlclb_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./database/init:/docker-entrypoint-initdb.d
+    networks:
+      - qlclb_network
+
+  # Backend API
+  backend:
+    build: ./backend
+    container_name: ql_clb_backend
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=production
+      - DB_HOST=mysql
+      - DB_USER=qlclb_user
+      - DB_PASSWORD=qlclb_password
+      - DB_NAME=ql_clb_sv
+      - JWT_SECRET=your_jwt_secret_key_here_change_this
+      - SESSION_SECRET=your_session_secret_key_change_this
+      - FRONTEND_URL=http://localhost:3000
+    depends_on:
+      - mysql
+    volumes:
+      - ./public:/app/public
+    networks:
+      - qlclb_network
+
+  # Frontend
+  frontend:
+    build: ./frontend
+    container_name: ql_clb_frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=http://localhost:5000/api
+    depends_on:
+      - backend
+    networks:
+      - qlclb_network
+
+volumes:
+  mysql_data:
+
+networks:
+  qlclb_network:
+    driver: bridge

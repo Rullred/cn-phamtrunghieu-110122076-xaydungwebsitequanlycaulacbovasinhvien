@@ -1,0 +1,324 @@
+/* ===== PHÊ DUYỆT HOẠT ĐỘNG - MODERN UI ===== */
+
+.phe-duyet-container {
+  padding: 40px;
+  animation: fadeIn 0.6s ease;
+}
+
+.page-header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 40px;
+}
+
+.page-title-main {
+  font-size: 32px;
+  font-weight: 800;
+  color: white;
+  margin: 0 0 8px 0;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+.page-subtitle-main {
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  font-size: 16px;
+}
+
+/* Success Message */
+.success-message {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, rgba(46, 213, 115, 0.15) 0%, rgba(26, 188, 156, 0.15) 100%);
+  color: #2ed573;
+  padding: 18px 24px;
+  border-radius: 16px;
+  margin-bottom: 30px;
+  font-weight: 600;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(46, 213, 115, 0.3);
+  animation: slideInDown 0.4s ease;
+}
+
+/* Empty State */
+.empty-state {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  padding: 80px 40px;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.empty-icon {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 30px;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #667eea;
+}
+
+.empty-state h3 {
+  font-size: 24px;
+  color: #2c3e50;
+  margin: 0 0 12px 0;
+  font-weight: 700;
+}
+
+.empty-state p {
+  color: #7f8c8d;
+  font-size: 16px;
+  margin: 0;
+}
+
+/* Activities Grid */
+.activities-grid-modern {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+  gap: 30px;
+}
+
+.activity-card-modern {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: fadeInUp 0.6s ease backwards;
+}
+
+.activity-card-modern:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+.activity-card-modern:nth-child(1) { animation-delay: 0.1s; }
+.activity-card-modern:nth-child(2) { animation-delay: 0.2s; }
+.activity-card-modern:nth-child(3) { animation-delay: 0.3s; }
+.activity-card-modern:nth-child(4) { animation-delay: 0.4s; }
+
+/* Card Header */
+.activity-card-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 25px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.activity-card-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></svg>');
+  opacity: 0.5;
+}
+
+.activity-icon-wrapper {
+  width: 60px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  position: relative;
+  z-index: 1;
+}
+
+/* Card Body */
+.activity-card-body {
+  padding: 30px;
+}
+
+.activity-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #2c3e50;
+  margin: 0 0 15px 0;
+  line-height: 1.4;
+}
+
+.activity-club-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.club-icon {
+  color: #667eea;
+  font-size: 18px;
+}
+
+.club-name {
+  font-weight: 600;
+  color: #2c3e50;
+  font-size: 15px;
+}
+
+.activity-description {
+  margin-bottom: 25px;
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.02);
+  border-radius: 12px;
+  border-left: 4px solid #667eea;
+}
+
+.activity-description p {
+  color: #5a6c7d;
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.activity-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.detail-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.02);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.detail-item:hover {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+}
+
+.detail-item.full-width {
+  grid-column: 1 / -1;
+}
+
+.detail-icon {
+  color: #667eea;
+  font-size: 16px;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.detail-item > div {
+  flex: 1;
+  min-width: 0;
+}
+
+.detail-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: #7f8c8d;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.detail-value {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+/* Activity Image */
+.activity-image {
+  margin-top: 20px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.activity-image img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+
+/* Card Footer */
+.activity-card-footer {
+  padding: 20px 30px 30px;
+  display: flex;
+  gap: 12px;
+}
+
+.activity-card-footer button {
+  flex: 1;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .activities-grid-modern {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .phe-duyet-container {
+    padding: 20px;
+  }
+
+  .page-header-section {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .activity-details {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-item.full-width {
+    grid-column: 1;
+  }
+}
