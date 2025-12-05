@@ -11,12 +11,15 @@ import {
   FaCalendarPlus,
   FaUserCheck,
   FaStar,
-  FaTrophy
+  FaTrophy,
+  FaChartLine
 } from 'react-icons/fa';
 import TaoHoatDong from './TaoHoatDong';
 import QuanLyHoatDong from './QuanLyHoatDong';
 import QuanLyThanhVien from './QuanLyThanhVien';
 import DanhSachDangKy from './DanhSachDangKy';
+import TopSinhVien from './TopSinhVien';
+import ThongKe from './ThongKe';
 import './CLBDashboard.css';
 
 const CLBHome = () => {
@@ -260,6 +263,20 @@ const CLBDashboard = () => {
             <FaUsers />
             <span>Quản lý thành viên</span>
           </Link>
+          <Link 
+            to="/caulacbo/top-sinh-vien" 
+            className={`nav-item ${location.pathname === '/caulacbo/top-sinh-vien' ? 'active' : ''}`}
+          >
+            <FaTrophy />
+            <span>Top Sinh Viên</span>
+          </Link>
+          <Link 
+            to="/caulacbo/thong-ke" 
+            className={`nav-item ${location.pathname === '/caulacbo/thong-ke' ? 'active' : ''}`}
+          >
+            <FaChartLine />
+            <span>Thống kê</span>
+          </Link>
         </nav>
         <div className="sidebar-footer-clb">
           <div className="clb-stats-mini">
@@ -281,6 +298,8 @@ const CLBDashboard = () => {
           <Route path="hoat-dong" element={<QuanLyHoatDong />} />
           <Route path="thanh-vien" element={<QuanLyThanhVien />} />
           <Route path="danh-sach-dang-ky/:hoatDongId" element={<DanhSachDangKy />} />
+          <Route path="top-sinh-vien" element={<TopSinhVien />} />
+          <Route path="thong-ke" element={<ThongKe />} />
         </Routes>
       </div>
     </div>

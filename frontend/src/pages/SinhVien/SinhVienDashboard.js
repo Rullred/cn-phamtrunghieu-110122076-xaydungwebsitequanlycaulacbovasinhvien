@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 import { sinhvienService } from '../../services/api';
-import { FaCalendar, FaClipboardList, FaUser } from 'react-icons/fa';
+import { FaCalendar, FaClipboardList, FaUser, FaTrophy, FaChartLine } from 'react-icons/fa';
 import DanhSachHoatDong from './DanhSachHoatDong';
 import HoatDongCuaToi from './HoatDongCuaToi';
 import Profile from './Profile';
+import TopSinhVien from './TopSinhVien';
+import ThongKe from './ThongKe';
 import './SinhVienDashboard.css';
 
 const SinhVienHome = () => {
@@ -73,6 +75,12 @@ const SinhVienDashboard = () => {
           <Link to="/sinhvien/profile" className="nav-item">
             <FaUser /> Hồ sơ cá nhân
           </Link>
+          <Link to="/sinhvien/top-sinh-vien" className="nav-item">
+            <FaTrophy /> Top Sinh Viên
+          </Link>
+          <Link to="/sinhvien/thong-ke" className="nav-item">
+            <FaChartLine /> Thống kê
+          </Link>
         </nav>
       </div>
 
@@ -82,6 +90,8 @@ const SinhVienDashboard = () => {
           <Route path="hoat-dong" element={<DanhSachHoatDong />} />
           <Route path="cua-toi" element={<HoatDongCuaToi />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="top-sinh-vien" element={<TopSinhVien />} />
+          <Route path="thong-ke" element={<ThongKe />} />
         </Routes>
       </div>
     </div>

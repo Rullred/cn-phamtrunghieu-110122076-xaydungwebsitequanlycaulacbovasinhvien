@@ -11,11 +11,15 @@ import {
   FaArrowDown,
   FaBell,
   FaCalendarAlt,
-  FaUserGraduate
+  FaUserGraduate,
+  FaTrophy,
+  FaChartLine
 } from 'react-icons/fa';
 import PheDuyetHoatDong from './PheDuyetHoatDong';
 import QuanLyCauLacBo from './QuanLyCauLacBo';
 import QuanLySinhVien from './QuanLySinhVien';
+import TopSinhVien from './TopSinhVien';
+import ThongKe from './ThongKe';
 import './AdminDashboard.css';
 
 const AdminHome = () => {
@@ -243,6 +247,20 @@ const AdminDashboard = () => {
             <FaUserGraduate />
             <span>Quản lý sinh viên</span>
           </Link>
+          <Link 
+            to="/admin/top-sinh-vien" 
+            className={`nav-item ${location.pathname === '/admin/top-sinh-vien' ? 'active' : ''}`}
+          >
+            <FaTrophy />
+            <span>Top Sinh Viên</span>
+          </Link>
+          <Link 
+            to="/admin/thong-ke" 
+            className={`nav-item ${location.pathname === '/admin/thong-ke' ? 'active' : ''}`}
+          >
+            <FaChartLine />
+            <span>Thống kê</span>
+          </Link>
         </nav>
         <div className="sidebar-footer">
           <div className="user-info">
@@ -263,6 +281,8 @@ const AdminDashboard = () => {
           <Route path="phe-duyet" element={<PheDuyetHoatDong />} />
           <Route path="cau-lac-bo" element={<QuanLyCauLacBo />} />
           <Route path="sinh-vien" element={<QuanLySinhVien />} />
+          <Route path="top-sinh-vien" element={<TopSinhVien />} />
+          <Route path="thong-ke" element={<ThongKe />} />
         </Routes>
       </div>
     </div>
