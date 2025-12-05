@@ -47,11 +47,11 @@ const Navbar = ({ user, unreadCount }) => {
     
     switch (user.loai_nguoi_dung) {
       case 'admin':
-        return 'Hệ thống quản lý Câu Lạc Bộ và Hoạt động của sinh viên trường Kỹ thuật và Công Nghệ - TVU';
+        return 'Hệ Thống Quản Lý Câu Lạc Bộ';
       case 'chu_nhiem':
-        return 'Hệ thống quản lý Câu Lạc Bộ trường Kỹ Thuật và Công nghệ - TVU';
+        return 'Hệ Thống Quản Lý Câu Lạc Bộ';
       case 'sinh_vien':
-        return 'Hoạt động Sinh viên trường Kỹ Thuật và Công nghệ - TVU';
+        return 'Sinh Viên KT&CN - TVU';
       default:
         return 'QL CLB & HD SV - TVU';
     }
