@@ -37,6 +37,7 @@ services:
       - mysql
     volumes:
       - ./public:/app/public
+      - ./backend/uploads:/app/uploads
     networks:
       - qlclb_network
 

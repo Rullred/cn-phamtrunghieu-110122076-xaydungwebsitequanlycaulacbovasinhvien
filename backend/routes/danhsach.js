@@ -270,15 +270,15 @@ router.post('/admin/upload-pdf', authenticateToken, isAdmin, upload.single('file
 router.get('/admin/danh-sach-file', authenticateToken, isAdmin, async (req, res) => {
   try {
     const [files] = await db.query(
-      `SELECT f.*, c.ten_clb, n.ho_ten as admin_name
+      `SELECT f.*, c.ten_clb
        FROM danh_sach_hoat_dong_file f
        LEFT JOIN cau_lac_bo c ON f.cau_lac_bo_id = c.id
-       LEFT JOIN nguoi_dung n ON f.admin_id = n.id
        ORDER BY f.created_at DESC`
     );
 
     res.json(files);
   } catch (error) {
+    console.error('Lỗi lấy danh sách file:', error);
     res.status(500).json({ message: 'Lỗi lấy danh sách file', error: error.message });
   }
 });

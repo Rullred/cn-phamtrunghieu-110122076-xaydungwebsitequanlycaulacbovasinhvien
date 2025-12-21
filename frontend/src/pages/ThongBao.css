@@ -170,6 +170,14 @@
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
 }
 
+.notification-card.clickable {
+  cursor: pointer;
+}
+
+.notification-card.clickable:hover {
+  border-color: rgba(102, 126, 234, 0.4);
+}
+
 .notification-card.unread {
   background: linear-gradient(135deg, rgba(102, 126, 234, 0.03) 0%, rgba(118, 75, 162, 0.03) 100%);
   border-color: rgba(102, 126, 234, 0.2);

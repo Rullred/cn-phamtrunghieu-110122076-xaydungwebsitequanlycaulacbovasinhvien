@@ -1,17 +1,22 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { thongbaoService } from '../services/api';
 import Loading from '../components/Loading';
 import { 
   FaBell, FaCheck, FaTrash, FaCheckCircle, FaTimesCircle, 
   FaCalendarCheck, FaUserCheck, FaUserTimes, FaClipboardCheck,
-  FaClipboardList, FaExclamationCircle, FaCheckDouble
+  FaClipboardList, FaExclamationCircle, FaCheckDouble, FaFileAlt
 } from 'react-icons/fa';
 import './ThongBao.css';
 
 const ThongBao = ({ updateUnreadCount }) => {
+  const navigate = useNavigate();
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('all'); // all, unread, read
+  
+  // Lấy thông tin user để xác định quyền
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
 
   useEffect(() => {
     fetchNotifications();
@@ -69,8 +74,84 @@ const ThongBao = ({ updateUnreadCount }) => {
       'duyet_hoat_dong': { icon: FaCheckCircle, color: '#10b981', bg: 'rgba(16, 185, 129, 0.1)', label: 'Hoạt động' },
       'tu_choi_hoat_dong': { icon: FaTimesCircle, color: '#ef4444', bg: 'rgba(239, 68, 68, 0.1)', label: 'Hoạt động' },
       'nho_hoat_dong': { icon: FaExclamationCircle, color: '#f59e0b', bg: 'rgba(245, 158, 11, 0.1)', label: 'Nhắc nhở' },
+      'yeu_cau_danh_sach': { icon: FaFileAlt, color: '#8b5cf6', bg: 'rgba(139, 92, 246, 0.1)', label: 'Yêu cầu danh sách' },
+      'cap_nhat_yeu_cau': { icon: FaFileAlt, color: '#06b6d4', bg: 'rgba(6, 182, 212, 0.1)', label: 'Cập nhật yêu cầu' },
+      'danh_sach_moi': { icon: FaFileAlt, color: '#10b981', bg: 'rgba(16, 185, 129, 0.1)', label: 'Danh sách mới' },
     };
     return styles[type] || { icon: FaBell, color: '#667eea', bg: 'rgba(102, 126, 234, 0.1)', label: 'Thông báo' };
+  };
+
+  // Xử lý click vào thông báo để chuyển trang
+  const handleNotificationClick = async (notification) => {
+    // Đánh dấu đã đọc nếu chưa đọc
+    if (!notification.da_doc) {
+      await handleMarkAsRead(notification.id);
+    }
+
+    // Xác định đường dẫn dựa trên loại thông báo và quyền người dùng
+    let targetPath = null;
+
+    // Nếu thông báo có lien_ket, sử dụng nó
+    if (notification.lien_ket) {
+      targetPath = notification.lien_ket;
+    } else {
+      // Xác định đường dẫn dựa trên loại thông báo
+      switch (notification.loai_thong_bao) {
+        case 'duyet_hoat_dong':
+        case 'tu_choi_hoat_dong':
+          if (user.loai_nguoi_dung === 'admin') {
+            targetPath = '/admin/phe-duyet';
+          } else if (user.loai_nguoi_dung === 'chu_nhiem') {
+            targetPath = '/caulacbo/hoat-dong';
+          } else {
+            targetPath = '/sinhvien/trang-thai-dang-ky';
+          }
+          break;
+        case 'hoat_dong_moi':
+          if (user.loai_nguoi_dung === 'sinh_vien') {
+            targetPath = '/sinhvien/hoat-dong';
+          }
+          break;
+        case 'dang_ky_thanh_cong':
+          if (user.loai_nguoi_dung === 'sinh_vien') {
+            targetPath = '/sinhvien/cua-toi';
+          }
+          break;
+        case 'duyet_thanh_vien_clb':
+        case 'tu_choi_thanh_vien_clb':
+          if (user.loai_nguoi_dung === 'chu_nhiem') {
+            targetPath = '/caulacbo/thanh-vien';
+          } else if (user.loai_nguoi_dung === 'sinh_vien') {
+            targetPath = '/sinhvien/dang-ky-clb';
+          }
+          break;
+        case 'nho_hoat_dong':
+          if (user.loai_nguoi_dung === 'sinh_vien') {
+            targetPath = '/sinhvien/cua-toi';
+          }
+          break;
+        case 'yeu_cau_danh_sach':
+          if (user.loai_nguoi_dung === 'admin') {
+            targetPath = '/admin/danh-sach-hoat-dong';
+          }
+          break;
+        case 'cap_nhat_yeu_cau':
+        case 'danh_sach_moi':
+          if (user.loai_nguoi_dung === 'chu_nhiem') {
+            targetPath = '/caulacbo/danh-sach-hoat-dong';
+          } else if (user.loai_nguoi_dung === 'sinh_vien') {
+            targetPath = '/sinhvien/danh-sach-file';
+          }
+          break;
+        default:
+          break;
+      }
+    }
+
+    // Chuyển trang nếu có đường dẫn
+    if (targetPath) {
+      navigate(targetPath);
+    }
   };
 
   const formatTime = (dateString) => {
@@ -156,7 +237,8 @@ const ThongBao = ({ updateUnreadCount }) => {
             return (
               <div 
                 key={notification.id} 
-                className={`notification-card ${!notification.da_doc ? 'unread' : ''}`}
+                className={`notification-card ${!notification.da_doc ? 'unread' : ''} clickable`}
+                onClick={() => handleNotificationClick(notification)}
               >
                 <div className="notification-indicator" style={{ background: style.color }}></div>
                 
@@ -175,7 +257,7 @@ const ThongBao = ({ updateUnreadCount }) => {
                   <p className="notification-content">{notification.noi_dung}</p>
                 </div>
                 
-                <div className="notification-actions">
+                <div className="notification-actions" onClick={(e) => e.stopPropagation()}>
                   {!notification.da_doc && (
                     <button 
                       onClick={() => handleMarkAsRead(notification.id)} 
