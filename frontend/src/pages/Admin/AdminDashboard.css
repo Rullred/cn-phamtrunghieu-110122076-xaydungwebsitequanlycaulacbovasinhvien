@@ -541,6 +541,11 @@
   transform: translateX(5px);
 }
 
+.activity-item.unread {
+  background: rgba(102, 126, 234, 0.08);
+  border-left: 3px solid #667eea;
+}
+
 .activity-icon {
   width: 45px;
   height: 45px;
@@ -564,6 +569,14 @@
   background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
 }
 
+.activity-icon-danger {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 100%);
+}
+
+.activity-icon-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
 .activity-content {
   flex: 1;
 }
@@ -575,9 +588,38 @@
   font-size: 15px;
 }
 
+.activity-desc {
+  color: #5a6c7d;
+  margin: 0 0 8px 0;
+  font-size: 13px;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 .activity-time {
   color: #7f8c8d;
   font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.time-icon {
+  font-size: 11px;
+}
+
+.empty-notifications {
+  text-align: center;
+  padding: 40px 20px;
+  color: #7f8c8d;
+}
+
+.empty-notifications .empty-icon {
+  color: #cbd5e0;
+  margin-bottom: 10px;
 }
 
 /* Loading */

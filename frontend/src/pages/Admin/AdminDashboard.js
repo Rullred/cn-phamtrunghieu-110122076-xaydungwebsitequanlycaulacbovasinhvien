@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, NavLink, Link, useNavigate } from 'react-router-dom';
-import { adminService } from '../../services/api';
+import { adminService, thongbaoService } from '../../services/api';
 import { 
   FaUsers, 
   FaClipboardCheck, 
   FaUniversity, 
   FaChartBar,
   FaTachometerAlt,
-  FaArrowUp,
-  FaArrowDown,
   FaBell,
   FaCalendarAlt,
   FaUserGraduate,
@@ -16,7 +14,10 @@ import {
   FaChartLine,
   FaClock,
   FaPlusCircle,
-  FaListAlt
+  FaListAlt,
+  FaCheckCircle,
+  FaTimesCircle,
+  FaInfoCircle
 } from 'react-icons/fa';
 import PheDuyetHoatDong from './PheDuyetHoatDong';
 import QuanLyCauLacBo from './QuanLyCauLacBo';
@@ -35,10 +36,12 @@ const AdminHome = () => {
     hoat_dong_sap_toi: 0,
     tai_khoan_cho_duyet: 0
   });
+  const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchStatistics();
+    fetchNotifications();
   }, []);
 
   const fetchStatistics = async () => {
@@ -50,6 +53,48 @@ const AdminHome = () => {
       console.error('Fetch statistics error:', error);
       setLoading(false);
     }
+  };
+
+  const fetchNotifications = async () => {
+    try {
+      const response = await thongbaoService.getNotifications();
+      setNotifications(response.data.slice(0, 5)); // Lấy 5 thông báo gần nhất
+    } catch (error) {
+      console.error('Fetch notifications error:', error);
+    }
+  };
+
+  const getNotificationIcon = (type) => {
+    switch (type) {
+      case 'duyet_hoat_dong':
+      case 'hoat_dong_moi':
+        return { icon: FaCalendarAlt, className: 'activity-icon-info' };
+      case 'tai_khoan_duyet':
+      case 'dang_ky_thanh_cong':
+        return { icon: FaCheckCircle, className: 'activity-icon-success' };
+      case 'tai_khoan_tu_choi':
+      case 'hoat_dong_tu_choi':
+        return { icon: FaTimesCircle, className: 'activity-icon-danger' };
+      case 'duyet_thanh_vien_clb':
+        return { icon: FaUsers, className: 'activity-icon-warning' };
+      default:
+        return { icon: FaInfoCircle, className: 'activity-icon-primary' };
+    }
+  };
+
+  const formatTimeAgo = (dateStr) => {
+    const date = new Date(dateStr);
+    const now = new Date();
+    const diffMs = now - date;
+    const diffMins = Math.floor(diffMs / 60000);
+    const diffHours = Math.floor(diffMs / 3600000);
+    const diffDays = Math.floor(diffMs / 86400000);
+
+    if (diffMins < 1) return 'Vừa xong';
+    if (diffMins < 60) return `${diffMins} phút trước`;
+    if (diffHours < 24) return `${diffHours} giờ trước`;
+    if (diffDays < 7) return `${diffDays} ngày trước`;
+    return date.toLocaleDateString('vi-VN');
   };
 
   const statsData = [
@@ -137,27 +182,12 @@ const AdminHome = () => {
                 <div className="stat-icon" style={{ background: stat.gradient }}>
                   <stat.icon size={32} />
                 </div>
-                <div className="stat-badge">
-                  <span>+{Math.floor(Math.random() * 30)}%</span>
-                </div>
               </div>
               <div className="stat-content">
                 <h3 className="stat-value">
                   <span className="counting-number">{stat.value.toLocaleString()}</span>
                 </h3>
                 <p className="stat-label">{stat.label}</p>
-              </div>
-              <div className="stat-footer">
-                <div className="stat-progress">
-                  <div 
-                    className="stat-progress-bar" 
-                    style={{ background: stat.gradient, width: `${60 + (index * 10)}%` }}
-                  ></div>
-                </div>
-                <div className="stat-trend">
-                  <FaArrowUp className="trend-icon" />
-                  <span>Tăng trưởng tốt</span>
-                </div>
               </div>
             </div>
           </div>
@@ -238,58 +268,36 @@ const AdminHome = () => {
             </div>
           </div>
           <div className="activity-list">
-            <div className="activity-item slide-in">
-              <div className="activity-icon activity-icon-success">
-                <FaUsers />
+            {notifications.length === 0 ? (
+              <div className="empty-notifications">
+                <FaBell size={32} className="empty-icon" />
+                <p>Chưa có thông báo nào</p>
               </div>
-              <div className="activity-content">
-                <p className="activity-text">
-                  <strong>{Math.floor(Math.random() * 10 + 1)} sinh viên mới</strong> đăng ký tham gia hệ thống
-                </p>
-                <span className="activity-time">
-                  <FaClock className="time-icon" /> 10 phút trước
-                </span>
-              </div>
-            </div>
-            <div className="activity-item slide-in" style={{ animationDelay: '0.1s' }}>
-              <div className="activity-icon activity-icon-info">
-                <FaCalendarAlt />
-              </div>
-              <div className="activity-content">
-                <p className="activity-text">
-                  <strong>{statistics.hoat_dong_sap_toi} hoạt động</strong> sẽ diễn ra trong tuần này
-                </p>
-                <span className="activity-time">
-                  <FaClock className="time-icon" /> 1 giờ trước
-                </span>
-              </div>
-            </div>
-            <div className="activity-item slide-in" style={{ animationDelay: '0.2s' }}>
-              <div className="activity-icon activity-icon-warning">
-                <FaClipboardCheck />
-              </div>
-              <div className="activity-content">
-                <p className="activity-text">
-                  <strong>{statistics.hoat_dong_cho_duyet || 0} hoạt động</strong> đang chờ phê duyệt từ admin
-                </p>
-                <span className="activity-time">
-                  <FaClock className="time-icon" /> 2 giờ trước
-                </span>
-              </div>
-            </div>
-            <div className="activity-item slide-in" style={{ animationDelay: '0.3s' }}>
-              <div className="activity-icon activity-icon-primary">
-                <FaChartLine />
-              </div>
-              <div className="activity-content">
-                <p className="activity-text">
-                  Hệ thống đang hoạt động ổn định với <strong>{statistics.tong_clb} CLB</strong>
-                </p>
-                <span className="activity-time">
-                  <FaClock className="time-icon" /> 5 giờ trước
-                </span>
-              </div>
-            </div>
+            ) : (
+              notifications.map((notif, index) => {
+                const { icon: NotifIcon, className } = getNotificationIcon(notif.loai_thong_bao);
+                return (
+                  <div 
+                    key={notif.id} 
+                    className={`activity-item slide-in ${!notif.da_doc ? 'unread' : ''}`}
+                    style={{ animationDelay: `${index * 0.1}s` }}
+                  >
+                    <div className={`activity-icon ${className}`}>
+                      <NotifIcon />
+                    </div>
+                    <div className="activity-content">
+                      <p className="activity-text">
+                        <strong>{notif.tieu_de}</strong>
+                      </p>
+                      <p className="activity-desc">{notif.noi_dung}</p>
+                      <span className="activity-time">
+                        <FaClock className="time-icon" /> {formatTimeAgo(notif.created_at)}
+                      </span>
+                    </div>
+                  </div>
+                );
+              })
+            )}
           </div>
         </div>
       </div>
